@@ -14,8 +14,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true
-  }
+  },
   // Add other fields as required
+  // add name
+  name: {
+    type: String,
+    required: true
+  }
+
 });
 
 module.exports = userSchema;
