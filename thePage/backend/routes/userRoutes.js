@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const authenticateToken = require('../middleware/authenticateToken'); // will be used to authenticate user for protected routes, delete comment when ready
 
 // Authentication routes - could be seprated into a separate file
+// router.get('/profile', authenticateToken, userController.getUserProfile); // future authenticated website
 router.post('/login', authController.login);
 router.post('/register', authController.register);
 

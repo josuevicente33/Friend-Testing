@@ -13,6 +13,8 @@ thePage/
 │   │   └── userController.js
 │   ├── routes/
 │   │   └── userRoutes.js
+│   │── middleware/
+│   │   └── authenticateToken.js
 │   ├── server.js
 │   └── db.js
 └── frontend/
