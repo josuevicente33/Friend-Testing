@@ -1,14 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './LandingPage.css'; // Import the CSS file
+import LoginForm from '../components/LoginForm'; // Adjust the path as needed
+import '../styles/LandingPage.css';
 
 function LandingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await fetch('http://localhost:5000/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        setIsLoggedIn(true);
+      } else {
+        // Handle login error
+      }
+    } catch (error) {
+      // Handle network or server error
+    }
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token'); // Remove the token from local storage
+    setIsLoggedIn(false); // Update the state to reflect that the user is no longer logged in
+  };
+
+  
   return (
     <div className="landing-container">
       <h1>Hello, welcome to The Page</h1>
-      <Link to="/register" className="register-link">
-        <button className="register-button">Register</button>
-      </Link>
+      {isLoggedIn ? (
+        <div><p>You are logged in.</p><button onClick={handleSignOut} className="sign-out-button">Sign Out</button></div>
+        // Additional elements for logged-in users Additional elements for logged-in users will like to have something for them to log out
+      ) : (
+        <div>
+          <p>Please log in.</p>
+          <LoginForm onLogin={handleLogin} />
+          <Link to="/register" className="register-link">
+            <button className="register-button">Register</button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

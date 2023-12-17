@@ -1,0 +1,13 @@
+.footer {
+    background-color: #0056b3; /* Darker blue */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Additional styling can be added here */
+  
