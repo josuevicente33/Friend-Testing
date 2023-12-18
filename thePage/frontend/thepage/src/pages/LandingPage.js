@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import LoginForm from '../components/LoginForm'; // Adjust the path as needed
+import LoginForm from '../components/LoginForm';
+import AuthContext from '../contexts/AuthContext'; // Import AuthContext
+
 import '../styles/LandingPage.css';
 
 function LandingPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const { isLoggedIn, setIsLoggedIn, setUserData } = useContext(AuthContext); // Use object destructuring
 
   const handleLogin = async (username, password) => {
     try {
@@ -18,6 +20,7 @@ function LandingPage() {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         setIsLoggedIn(true);
+        setUserData({ username: username }); // Assuming you want to store the username in userData
       } else {
         // Handle login error
       }
@@ -28,16 +31,18 @@ function LandingPage() {
 
   const handleSignOut = () => {
     localStorage.removeItem('token'); // Remove the token from local storage
-    setIsLoggedIn(false); // Update the state to reflect that the user is no longer logged in
+    setIsLoggedIn(false);
+    setUserData(null); // Clear user data
   };
 
-  
   return (
     <div className="landing-container">
       <h1>Hello, welcome to The Page</h1>
       {isLoggedIn ? (
-        <div><p>You are logged in.</p><button onClick={handleSignOut} className="sign-out-button">Sign Out</button></div>
-        // Additional elements for logged-in users Additional elements for logged-in users will like to have something for them to log out
+        <div>
+          <p>You are logged in.</p>
+          <button onClick={handleSignOut} className="sign-out-button">Sign Out</button>
+        </div>
       ) : (
         <div>
           <p>Please log in.</p>
