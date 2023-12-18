@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
 import Navbar from './components/Navbar';
+import DashboardPage from './pages/DashboardPage';
+import { AuthProvider } from './contexts/AuthContext';
 
 import logo from './logo.svg';
 import './App.css';
@@ -11,17 +13,19 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
+    <AuthProvider>
     <Router>
     <Navbar />
     
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
 
     <Footer />
     </Router>
-    
+    </AuthProvider>
     </>
 
 
